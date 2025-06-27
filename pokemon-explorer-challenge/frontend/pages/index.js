@@ -14,12 +14,22 @@ export default function Home() {
    * 4. Handle error state (Pokemon not found, network errors, etc.)
    */
   const fetchPokemon = async () => {
-    const cleanedQuery = query.trim().toLowerCase();
-    if (!trimmedQuery) return;
+      const cleanedQuery = query.trim().toLowerCase();
+      if (!cleanedQuery) return;
 
-    setLoading(true);
-    setError(null);
-    setPokemon(null);
+      setLoading(true);
+      setError(null);
+      setPokemon(null);
+
+      try {
+          const response = await fetch(`http://localhost:3001/api/pokemon/${cleanedQuery}`);
+          throw new Error("Placeholder error.");
+      }
+      catch (err)
+      {
+          console.error('Fetch error:', err);
+          setError(err.message);
+      }
   };
 
   return (
