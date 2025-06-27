@@ -41,6 +41,9 @@ export default function Home() {
                   throw new Error('Failed to fetch Pokemon data.');
               }
           }
+
+          const data = await response.json();
+          setPokemon(data);
       }
       catch (err)
       {
