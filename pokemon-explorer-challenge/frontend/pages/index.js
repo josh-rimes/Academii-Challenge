@@ -50,6 +50,10 @@ export default function Home() {
           console.error('Fetch error:', err);
           setError(err.message);
       }
+      finally
+      {
+          setLoading(false);
+      }
   };
 
   return (
