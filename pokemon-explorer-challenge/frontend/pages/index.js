@@ -14,8 +14,12 @@ export default function Home() {
    * 4. Handle error state (Pokemon not found, network errors, etc.)
    */
   const fetchPokemon = async () => {
-    // TODO: Implement this function
-    alert("Not implemented yet!");
+    const cleanedQuery = query.trim().toLowerCase();
+    if (!trimmedQuery) return;
+
+    setLoading(true);
+    setError(null);
+    setPokemon(null);
   };
 
   return (
