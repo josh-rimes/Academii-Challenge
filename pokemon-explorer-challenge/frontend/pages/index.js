@@ -22,17 +22,18 @@ export default function Home() {
       setError(null);
       setPokemon(null);
 
-      try {
+      try
+      {
           const response = await fetch(`http://localhost:3001/api/pokemon/${cleanedQuery}`); // Attempts to access backend GET route
           
           // If response status is an error then send an error message
           if (!response.ok)
           {
-              if (response.status === 404)
+              if (response.status === 404) // Checks for 404 not found error
               {
                   throw new Error(`Pokemon "${cleanedQuery}" not found.`);
               }
-              else if (response.status === 500)
+              else if (response.status === 500) // Checks for 404 internal server error
               {
                   throw new Error('Internal Server Error.');
               }
@@ -43,7 +44,7 @@ export default function Home() {
           }
 
           const data = await response.json();
-          setPokemon(data);
+          setPokemon(data); // The loaded data is passed into the setPokemon state
       }
       catch (err)
       {
@@ -52,7 +53,7 @@ export default function Home() {
       }
       finally
       {
-          setLoading(false);
+          setLoading(false); // Loading state should always be turned off at the end regardless of errors
       }
   };
 

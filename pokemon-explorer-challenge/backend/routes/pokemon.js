@@ -19,18 +19,15 @@ router.get("/:name", async (req, res) => {
     const { name } = req.params;
     const APIURL = `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`; // .toLowerCase() converts any uppercase characters to lowercase
 
-    try {
+    try 
+    {
         const response = await fetch(APIURL); // Attempts to access the PokeAPI
 
         
         // If response status is an error then send an error message
         if (!response.ok)
         {
-            if (response.status == 400)
-            {
-              return res.status(400).json({ error: 'API error: bad request.' });
-            }
-            else if (response.status == 404) // Checks for 404 not found error
+            if (response.status == 404) // Checks for 404 not found error
             {
                 return res.status(404).json({ error: `Pokemon "${name}" not found.` });
             }
