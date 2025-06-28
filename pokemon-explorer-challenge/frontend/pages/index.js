@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const cache = {};
+
 export default function Home() {
   const [query, setQuery] = useState("");
   const [pokemon, setPokemon] = useState(null);
@@ -14,8 +16,18 @@ export default function Home() {
    * 4. Handle error state (Pokemon not found, network errors, etc.)
    */
   const fetchPokemon = async () => {
-      const cleanedQuery = query.trim().toLowerCase(); // User input is cleaned so that the name passed into the backend is consistent with the PokeAPI's URL
+      const cleanedQuery = query.trim().toLowerCase(); // User input is normalised so that the name passed into the backend is consistent with the PokeAPI's URL
       if (!cleanedQuery) return;
+
+      console.log("Cached pokemon found.");
+      // If the Pokemon has already been searched for then we can skip the API call
+      if (cache[cleanedQuery])
+      {
+          console.log("Cached pokemon found.");
+          setPokemon(cache[cleanedQuery]);
+          setError(null);
+          return;
+      }
 
       // React states set before fetch is called
       setLoading(true);
@@ -44,6 +56,7 @@ export default function Home() {
           }
 
           const data = await response.json();
+          cache[cleanedQuery] = data; // The loaded data is stored in cache
           setPokemon(data); // The loaded data is passed into the setPokemon state
       }
       catch (err)
